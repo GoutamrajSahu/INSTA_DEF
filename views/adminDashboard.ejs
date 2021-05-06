@@ -1,0 +1,42 @@
+<%-include('header');-%>
+
+<h1>ADMIN DASHBOARD</h1>
+    <div class="btn-group" role="group" aria-label="...">
+      <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Update Section
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a href="/addDefinitions">Add definitions</a></li>
+          <li><a href="#">Edit topic Name & Description</a></li>
+        </ul>
+      </div>
+    </div>
+<div><h2>Insert a new topic:</h2></div>
+<form action="/adminDashboard" method="POST">
+    <div class="mb-3">
+        <label class="form-label">Topic Name:</label>
+        <input type="text" class="form-control" name="topicName" required>
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Topic Desc:</label>
+        <input type="text" class="form-control" name="topicDesc" required>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Topic Defs:</label>
+      <div>
+        <label for="defOn1"><h5>First Definition On:</h5></label>
+        <input type="text" name="initialDefOn1" required>
+        <textarea class="form-control" id="initialDef1" name="initialDef1" placeholder="Initial definition 1" required></textarea>
+        <label for="defOn2"><h5>Second Definition On:</h5></label>
+        <input type="text" name="initialDefOn2" required>
+        <textarea class="form-control" id="initialDef2" name="initialDef2" placeholder="Initial definition 2" required></textarea>
+        <h4>You can add more definitions to a particular topic in Update section.</h4>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+
+<%-include('footer');-%>

@@ -1,0 +1,16 @@
+<%-include('header');-%>
+
+<h1><%=topicTitle%>:</h1>
+
+<div>
+  <%topicDefs.forEach((def)=>{%>
+      <div>
+        <h4><b><%=def.defOn%></b></h4>
+        <p><%=def.definition%></p>
+        <a href="#">Read...</a>
+      </div>
+  <%});%>
+</div>
+
+
+<%-include('footer');-%>

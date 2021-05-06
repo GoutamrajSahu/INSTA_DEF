@@ -1,0 +1,17 @@
+<%-include('header');-%>
+<h1>Log In</h1>
+<form action="/login" method="POST">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" name="username" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div>
+    <h5>New?, then<a href="/signup"> SignUp.</a></h5>
+  </div>
+<%-include('footer');-%>

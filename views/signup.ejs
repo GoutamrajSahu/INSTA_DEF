@@ -1,0 +1,20 @@
+<%-include('header');-%>
+<h1>Sign Up</h1>
+<form action="/signup" method="POST">
+  
+    <div class="mb-3">
+      <label for="emailAddress" class="form-label">Email address:</label>
+      <input type="email" class="form-control" id="emailID" name="username" aria-describedby="emailHelp" required>
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password:</label>
+      <input type="password" class="form-control" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  <div>
+    <h5>Existing user?, then<a href="/login"> LogIn.</a></h5>
+  </div>
+
+<%-include('footer');-%>

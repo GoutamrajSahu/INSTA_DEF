@@ -1,0 +1,30 @@
+<%-include('header');-%>
+
+<h1>Find your definition topic</h1>
+
+<div class="defCards">
+  <% let i = 0; %>
+  <% topics.forEach((topic)=>{ %>
+    <% i++; %>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h3 class="card-title"><b><%=topic.topicName%>:</b></h3>
+          <p class="card-text"><%=topic.topicDesc%></p>
+          <a href="/topicIs/<%=topic.topicName%>" class="btn btn-primary">Read topic</a>
+        </div>
+      </div>
+   <% if(i===6){ %>
+     </div>
+     <div class="defCards">
+     <%i = 0;%>
+   <% } %>
+      <% if(topics.indexOf(topic) === topics.length-1){ %>
+       </div>
+      <% } %>
+  <% }); %>
+
+  
+
+
+
+<%-include('footer');-%>
