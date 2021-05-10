@@ -42,7 +42,8 @@ const topicDefSchema = new mongoose.Schema({
 //For User authentication
 const userSchema = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  realName: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -190,10 +191,49 @@ app.post("/signup",(req,res)=>{
   });
 });
 
+
+app.get("/userProfile", (req,res)=>{
+ if(req.isAuthenticated()){
+   const email = req.user.username;
+   const realName = req.user.realName;
+  res.render("userProfile",{realName:realName, email:email, isLogin:true});
+ }else{
+   res.redirect("/login");
+ }
+});
+
+app.get("/editUserProfile",(req,res)=>{
+  if(req.isAuthenticated()){
+  const email = req.user.username;
+  const realName = req.user.realName;
+  res.render("editUserProfile",{realName:realName, email:email, isLogin:true});
+  }else{
+    res.redirect("/login");
+  }
+});
+
+app.post("/editUserProfile", (req,res)=>{
+  const username = req.body.username;
+  const realName = req.body.realName;
+  user.findOne({username:username},(err,findUser)=>{
+    if(err){
+      console.log(err);
+    }else{
+      findUser.realName = realName;
+      findUser.save();
+      res.redirect("/userProfile");
+    }
+  });
+});
+
+
+
 app.get("/logout", (req,res)=>{
   req.logout();
   res.redirect("/login");
 });
+
+
 
 //Start of Admin section
 app.get("/adminLogin",(req,res)=>{

@@ -1,0 +1,19 @@
+<%-include("header")-%>
+<h1>EDIT_PROFILE</h1>
+<div>
+    <form action="/editUserProfile" method="POST">
+        <h3>Name:</h3>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="realName" placeholder="<%=realName%>" value="<%=realName%>">
+        </div>
+        <div>
+            <label for="name">Email:</label>
+            <input type="text" name="username" placeholder="<%=email%>" value="<%=email%>">
+        </div>
+        <div>
+            <button type="submit">Update</button>
+        </div>
+    </form>
+</div>
+<%-include("footer")-%>
