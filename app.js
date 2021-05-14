@@ -87,7 +87,9 @@ const defaultDefs = [defaultDef1,defaultDef2,defaultDef3];
 const topicSchema = new mongoose.Schema({
   topicName: String,
   topicDesc: String,
-  topicDefs:[topicDefSchema]
+  topicDefs:[topicDefSchema],
+  creatorUserName: String,
+  creatorRealName: String
 });
 const topic = mongoose.model("topic", topicSchema);
 
@@ -101,7 +103,9 @@ app.get("/",(req,res)=>{
             const Topic = new topic({
               topicName:"DefaultTopic",
               topicDesc:"It is Used for rendering the default data",
-              topicDefs:defaultDefs
+              topicDefs:defaultDefs,
+              creatorUserName: "Default Creator",
+              creatorRealName: "Default Creator"
             });
             Topic.save();  
             res.redirect("/");
@@ -294,7 +298,9 @@ app.post("/adminDashboard",(req,res)=>{
   const newTopic = new topic({
     topicName:topicName,
     topicDesc:topicDesc,
-    topicDefs:defArr
+    topicDefs:defArr,
+    creatorUserName:"Admin",
+    creatorRealName:"Admin"
   });
   newTopic.save();
   res.redirect("/adminDashboard");
