@@ -230,6 +230,60 @@ app.post("/editUserProfile", (req,res)=>{
   });
 });
 
+app.get("/addUserTopic", (req,res)=>{
+ if(req.isAuthenticated()){
+  res.render("addUserTopic", {isLogin:true, message:""});
+ }else{
+   res.redirect("/login");
+ }
+});
+
+app.post("/addUserTopic", (req,res)=>{
+const topicName = req.body.topicName;
+const topicDesc = req.body.topicDesc;
+const initialDefOn1 = req.body.initialDefOn1;
+const initialDefOn2 = req.body.initialDefOn2;
+const initialDef1 = req.body.initialDef1;
+const initialDef2 = req.body.initialDef2;
+const definitionInfo1 = {
+  defOn: initialDefOn1,
+  definition: initialDef1
+};
+const definitionInfo2 = {
+  defOn: initialDefOn2,
+  definition: initialDef2
+};
+const defArr = [definitionInfo1,definitionInfo2];
+
+// console.log(defArr);
+
+topic.findOne({topicName:topicName, creatorUserName:req.user.username},(err,foundTopic)=>{
+  if(err){
+    const message = "error";   
+    res.render("addUserTopic", {isLogin:true, message:message});
+  }else{
+    if(foundTopic != null){
+      const message = "exist";   
+      res.render("addUserTopic", {isLogin:true, message:message});
+      // console.log(foundTopic);
+    }else{
+      const newTopic = new topic({
+        topicName:topicName,
+        topicDesc:topicDesc,
+        topicDefs:defArr,
+        creatorUserName:req.user.username,
+        creatorRealName:req.user.realName
+      });
+      newTopic.save();
+      // console.log(foundTopic);
+   const message = "success";   
+   res.render("addUserTopic", {isLogin:true,message:message});
+    }
+  }
+  
+});
+
+});
 
 
 app.get("/logout", (req,res)=>{
@@ -278,7 +332,7 @@ app.get("/adminDashboard",(req,res)=>{
   res.render("adminDashboard", {isLogin:true});
 });
 
-app.post("/adminDashboard",(req,res)=>{
+app.post("/adminDashboard",(req,res)=>{      // Problem to resolve: adding multiple topics with same name.
   const topicName =req.body.topicName;
   const topicDesc =req.body.topicDesc;
   const initialDefOn1 =req.body.initialDefOn1;
