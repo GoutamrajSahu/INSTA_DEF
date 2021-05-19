@@ -1,13 +1,13 @@
 <%-include("header");-%>
 <div>
-    <form action="/addDefinitions" method="POST">
+    <form action="/addUserDefinitions" method="POST">
         <div class="mb-3">
             <label class="form-label">Topic Name:</label>
             <input type="text" class="form-control" name="topicName" placeholder="Name of the topic" required>
         </div>
 
         <%if(isPresent === "false"){%>
-            <h5 class="alert alert-danger">Topic is not present, Please input a valid topic name, else create a new topic.</h5>
+            <h5 class="alert alert-danger">Please input a valid topic name.</h5>
         <%}%>
        
         <div class="mb-3">
@@ -20,5 +20,15 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+     
+      <% if(message === "success"){ %>
+        <label for="message" class="alert alert-success">Successfully added...!</label>
+     <% }else if(message === "topicNotPresent"){ %>
+        <label for="message" class="alert alert-warning">Topic with the given name is not present in your account, try with another topic name or create a new topic.</label>
+     <% }else if(message === "error"){ %>
+        <label for="message" class="alert alert-danger">Failed to add due to error...!</label>
+     <% }else if(message === ""){ %>
+    
+     <% } %> 
 </div>
 <%-include("footer")-%>

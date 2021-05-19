@@ -217,17 +217,22 @@ app.get("/editUserProfile",(req,res)=>{
 });
 
 app.post("/editUserProfile", (req,res)=>{
-  const username = req.body.username;
-  const realName = req.body.realName;
-  user.findOne({username:username},(err,findUser)=>{
-    if(err){
-      console.log(err);
-    }else{
-      findUser.realName = realName;
-      findUser.save();
-      res.redirect("/userProfile");
-    }
-  });
+  if(req.isAuthenticated()){
+
+      const username = req.body.username;
+    const realName = req.body.realName;
+    user.findOne({username:username},(err,findUser)=>{
+      if(err){
+        console.log(err);
+      }else{
+        findUser.realName = realName;
+        findUser.save();
+        res.redirect("/userProfile");
+      }
+    });
+  }else{
+    res.redirect("/login");
+  }
 });
 
 app.get("/addUserTopic", (req,res)=>{
@@ -239,6 +244,7 @@ app.get("/addUserTopic", (req,res)=>{
 });
 
 app.post("/addUserTopic", (req,res)=>{
+  if(req.isAuthenticated()){
 const topicName = req.body.topicName;
 const topicDesc = req.body.topicDesc;
 const initialDefOn1 = req.body.initialDefOn1;
@@ -283,6 +289,51 @@ topic.findOne({topicName:topicName, creatorUserName:req.user.username},(err,foun
   
 });
 
+  }else{
+    res.redirect("/login");
+  }
+
+});
+
+app.get("/addUserDefinitions", (req,res)=>{
+if(req.isAuthenticated()){
+  res.render("addUserDefinitions",{isLogin:true,isPresent:"true",message:""});
+}else{
+  res.redirect("/login");
+}
+});
+
+app.post("/addUserDefinitions",(req,res)=>{
+  if(req.isAuthenticated()){
+     const topicName = req.body.topicName;
+     const defOn = req.body.defOn;
+     const def = req.body.def;
+     const creatorUserName = req.user.username;
+     topic.findOne({topicName:topicName, creatorUserName:creatorUserName},(err,foundTopic)=>{
+       if(err){
+        //  console.log(err);
+         res.render("addUserDefinitions",{isLogin:true,isPresent:"true",message:"error"});
+       }
+       else{
+         if(foundTopic != null){
+           const newDef = {
+             defOn : defOn,
+             definition : def   
+           };
+          foundTopic.topicDefs.push(newDef);
+          foundTopic.save();
+          res.render("addUserDefinitions",{isLogin:true,isPresent:"true",message:"success"});
+          // console.log("Successfully added...!",creatorUserName);
+         }else{
+          res.render("addUserDefinitions",{isLogin:true,isPresent:"false",message:"topicNotPresent"});
+          // console.log("Topic is not present in your account, Please first create a new topic.",creatorUserName);
+         }
+       }
+       
+     });
+  }else{
+    res.redirect("/login");
+  }
 });
 
 
@@ -375,12 +426,12 @@ app.post("/addDefinitions",(req,res)=>{
     if(findTopic === null){
       // console.log("Topic is not present");
       const isLogin = true;                           //can be change
-      const isPresent = "true";
+      const isPresent = "false";
       res.render("addDefinitions",{isPresent:isPresent,isLogin:isLogin});
     }
     else{
       const isLogin = true;                           //can be change
-      const isPresent = "false";
+      const isPresent = "true";
         const newDef = {
            defOn:defOn,
            definition:def

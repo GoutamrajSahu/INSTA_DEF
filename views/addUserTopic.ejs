@@ -23,13 +23,13 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
- <% if(message == "success"){ %>
+ <% if(message === "success"){ %>
     <label for="message" class="alert alert-success">Successfully added...!</label>
- <% }else if(message == "exist"){ %>
+ <% }else if(message === "exist"){ %>
     <label for="message" class="alert alert-warning">Topic with same name already there, try with another topic name.</label>
- <% }else if(message == "error"){ %>
+ <% }else if(message === "error"){ %>
     <label for="message" class="alert alert-danger">Failed to add due to error...!</label>
- <% }else if(message == ""){ %>
+ <% }else if(message === ""){ %>
 
  <% } %>
 
